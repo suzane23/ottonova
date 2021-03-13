@@ -50,11 +50,11 @@ public class AppUsageDataPage extends BasePage {
             try {
                 androidDriver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
                 sendAppUsageDataButton.click();
+
+                extentTest.log(Status.INFO, "Send App Usage Data Button clicked");
             } catch (Exception e) {
-                e.printStackTrace();
-                extentTest.fail(e.getMessage());
+                extentTest.fail("Send App Usage Data Button click failed");
             }
-            extentTest.log(Status.INFO, "Send App Usage Data Button clicked");
         } else {
             extentTest.fail("Send App usage data button not present");
         }

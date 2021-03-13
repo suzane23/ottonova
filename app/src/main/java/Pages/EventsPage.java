@@ -63,13 +63,13 @@ public class EventsPage extends BasePage {
     }
 
   public void getEventCardsAndCount(){
-        int count = 0;
+        int eventsCardCount = 0;
         try {
 
             String messageElementText = healthPrompt.getText();
             extentTest.log(Status.INFO,"Message = " + messageElementText);
 
-            count++;
+            eventsCardCount++;
 
             String nextMessage;
 
@@ -81,7 +81,6 @@ public class EventsPage extends BasePage {
 
             boolean bContinue;
 
-
             do {
 
                 new TouchAction(androidDriver)
@@ -91,9 +90,9 @@ public class EventsPage extends BasePage {
 
                 try {
                     Thread.sleep(2000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                    extentTest.fail(e.getMessage());
+                }
+                catch (InterruptedException e) {
+
                 }
 
                 nextMessage = healthPrompt.getText();
@@ -102,7 +101,7 @@ public class EventsPage extends BasePage {
                     messageElementText = nextMessage;
                     extentTest.log(Status.INFO,"Message = " + nextMessage);
                     bContinue = true;
-                    count++;
+                    eventsCardCount++;
                 }
                 else {
                     bContinue = false;
@@ -110,12 +109,11 @@ public class EventsPage extends BasePage {
 
             }while (bContinue);
 
+            extentTest.log(Status.INFO,"Total event cards = " + eventsCardCount);
         }
         catch (Exception e) {
             extentTest.fail(e.getMessage());
         }
-
-        extentTest.log(Status.INFO,"Total event cards = " + count);
     }
 
     public void goToProfile(){
@@ -123,11 +121,11 @@ public class EventsPage extends BasePage {
             try {
                 androidDriver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
                 profile.click();
-            } catch (Exception e) {
-                e.printStackTrace();
-                extentTest.fail(e.getMessage());
+                extentTest.log(Status.INFO, "Profile Clicked");
             }
-            extentTest.log(Status.INFO, "Profile Clicked");
+            catch (Exception e) {
+                extentTest.fail("Failed to click Profile button");
+            }
         } else {
             extentTest.fail("Profile not present");
         }

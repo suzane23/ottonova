@@ -45,7 +45,7 @@ public class Tests extends Report{
      }
 
 
-    @Test
+    //@Test
     public void eventsCardsVerify(){
         ExtentTest test = extent.createTest("Go to events Page and Read Cards");
         test.log(Status.INFO, "Test Started");
@@ -118,7 +118,7 @@ public class Tests extends Report{
         tariffsPage.clickCalculatePremiumButton();
 
         WebPage webPage = new WebPage(driver, test);
-        webPage.click();
+        webPage.verifyURL();
         test.log(Status.INFO, "Test Complete");
 
 

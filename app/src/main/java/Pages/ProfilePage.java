@@ -45,19 +45,22 @@ public class ProfilePage extends BasePage {
     public void clickOurTariffs(){
         try {
             Thread.sleep(2000);
-        } catch (InterruptedException e) {
+        }
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         if(ourTariffs.isEnabled() ) {
             try {
                 ourTariffs.click();
-            } catch (Exception e) {
-                e.printStackTrace();
-                extentTest.fail(e.getMessage());
+
+                extentTest.log(Status.INFO, "Our Tariffs Clicked");
             }
-            extentTest.log(Status.INFO, "Our Tariffs Clicked");
+            catch (Exception e) {
+                extentTest.fail("Failed to click on Our Tariffs button");
+            }
         } else {
-            extentTest.fail("Our Tariffs Not Clicked");
+            extentTest.fail("Our Tariffs is not present");
         }
 
     }

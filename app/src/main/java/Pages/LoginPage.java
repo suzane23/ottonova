@@ -39,11 +39,11 @@ public class LoginPage extends BasePage {
             try {
                 androidDriver.manage().timeouts().implicitlyWait(1, TimeUnit.SECONDS);
                 testAppButton.click();
+
+                extentTest.log(Status.INFO, "Test App Button Clicked");
             } catch (Exception e) {
-                e.printStackTrace();
-                extentTest.fail(e.getMessage());
+                extentTest.fail("Failed to click on Test App button");
             }
-            extentTest.log(Status.INFO, "Test App Button Clicked");
         } else {
             extentTest.fail("Test App button not present");
         }
