@@ -11,7 +11,7 @@ public class Report {
 
     @BeforeAll
     public void reportSetup(){
-        htmlReporter = new ExtentHtmlReporter("Report.html");
+        htmlReporter = new ExtentHtmlReporter("Ottonova_Report.html");
 
         // create ExtentReports and attach reporter(s)
         extent = new ExtentReports();

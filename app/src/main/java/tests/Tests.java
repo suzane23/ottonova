@@ -118,7 +118,7 @@ public class Tests extends Report{
         tariffsPage.clickCalculatePremiumButton();
 
         WebPage webPage = new WebPage(driver, test);
-        webPage.click();
+        webPage.verifyURL();
         test.log(Status.INFO, "Test Complete");
 
 

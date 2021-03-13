@@ -38,17 +38,15 @@ public class TariffsPage extends BasePage {
         if(calculatePremiumButton.isEnabled()) {
             try {
                 calculatePremiumButton.click();
-            } catch (Exception e) {
-                e.printStackTrace();
-                extentTest.fail(e.getMessage());
+
+                extentTest.log(Status.INFO, "Calculate Premium Clicked");
             }
-            extentTest.log(Status.INFO, "Calculate Premium Clicked");
+            catch (Exception e) {
+                extentTest.fail("Failed to click on Calculate Premium button");
+            }
         }
         else {
             extentTest.fail("Calculate Premium not present");
         }
-
     }
-
-
 }

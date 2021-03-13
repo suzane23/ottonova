@@ -12,7 +12,7 @@ import java.util.Set;
 
 public class WebPage extends BasePage {
 
-    private final static String URL = "https://www.ottonova.de/online-beitragsrechner/?utm_source=content_referral&utm_medium=ottonova_app&utm_campaign=tariff";
+    private final static String URL_TO_MATCH = "https://www.ottonova.de/online-beitragsrechner/?utm_source=content_referral&utm_medium=ottonova_app&utm_campaign=tariff";
 
     private ExtentTest extentTest;
     public WebPage(AndroidDriver<AndroidElement> androidDriver, ExtentTest extentTest) {
@@ -30,11 +30,11 @@ public class WebPage extends BasePage {
 
     @Override
     public boolean verifyPage() {
-
         return false;
     }
 
-    public void click() {
+    public void verifyURL() {
+
         try {
             Thread.sleep(5000);
         } catch (InterruptedException e) {
@@ -42,30 +42,40 @@ public class WebPage extends BasePage {
         }
 
         Set<String> contexts = androidDriver.getContextHandles();
-       // System.out.println(contexts.toArray()[1]);
-        try {
-            androidDriver.context(String.valueOf(contexts.toArray()[1]));
-        } catch (Exception e) {
-            e.printStackTrace();
-            extentTest.fail(e.getMessage());
-        }
-        extentTest.log(Status.INFO, "Switched to WebView");
-        String copiedURL = androidDriver.getCurrentUrl();
-        extentTest.log(Status.INFO, "Actual URL " + copiedURL);
-        extentTest.log(Status.INFO, "Expected URL " + URL );
-        if (copiedURL.equals(URL)) {
-            System.out.println("URL matches");
-        } else {
-            System.out.println("URL not matched");
-        }
 
+        for (String context: contexts) {
+            if(context.contains("WEBVIEW")) {
+                try {
+                    androidDriver.context(context);
+
+                    extentTest.log(Status.INFO, "Switched to WebView");
+                    String copiedURL = androidDriver.getCurrentUrl();
+                    extentTest.log(Status.INFO, "Actual URL " + copiedURL);
+                    extentTest.log(Status.INFO, "Expected URL " + URL_TO_MATCH);
+                    if (copiedURL.equals(URL_TO_MATCH)) {
+                        extentTest.log(Status.INFO, "URL matches");
+                    } else {
+                        extentTest.log(Status.INFO, "URL not matched");
+                    }
+
+                    switchContextToNative();
+
+                } catch (Exception e) {
+                    extentTest.fail("Failed to get web URL");
+                }
+            }
+        }
+    }
+
+    private void switchContextToNative(){
         try {
             androidDriver.context("NATIVE_APP");
-        } catch (Exception e) {
-            e.printStackTrace();
-            extentTest.fail(e.getMessage());
+
+            extentTest.log(Status.INFO, "Switched to NATIVE_APP");
         }
-        extentTest.log(Status.INFO, "Switched to NATIVE_APP");
+        catch (Exception e) {
+            extentTest.warning("Failed to Switch context to NATIVE_APP");
+        }
     }
 }
 
